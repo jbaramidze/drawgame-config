@@ -14,8 +14,16 @@ spec:
       labels:
         component: mongo
     spec:
+      volumes:
+        - name: main-vol
+          persistentVolumeClaim:
+            claimName: mongo-pv-claim
       containers:
         - name: mongo
           image: jbaramidze/drawgame-mongo
           ports:
             - containerPort: 27017
+          volumeMounts:
+            - mountPath: "/data/db"
+              name: main-vol
+              subPath: "mongo"
