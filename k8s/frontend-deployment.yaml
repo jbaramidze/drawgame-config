@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fronted
+  labels:
+    component: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: frontend
+  template:
+    metadata:
+      labels:
+        component: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: jbaramidze/drawgame-frontend
+          ports:
+            - containerPort: 2000
+          env:
+            - name: REACT_APP_BE_ADDR
+              value: "api"
+          stdin: true

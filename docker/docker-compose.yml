@@ -4,6 +4,7 @@ services:
                 build:
                         context: "../../back"
                         dockerfile: Dockerfile.dev
+                image: jbaramidze/drawgame-backend
                 ports:
                         - "3000:3000"
                 volumes:
@@ -15,6 +16,7 @@ services:
                 build:
                         context: "../../front"
                         dockerfile: Dockerfile.dev
+                image: jbaramidze/drawgame-frontend
                 ports:
                         - "2000:2000"
                 volumes:
@@ -25,6 +27,7 @@ services:
                         - REACT_APP_BE_ADDR=${BE_ADDR}
         mongo:
                 build: "../mongo"
+                image: jbaramidze/drawgame-mongo
                 ports:
                         - "27099:27017"
 
