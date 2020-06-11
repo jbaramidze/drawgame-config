@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+        backend:
+                build:
+                        context: "../../back"
+                        dockerfile: Dockerfile.dev
+                ports:
+                        - "3000:3000"
+                volumes:
+                        - "../../back:/app"
+                        - "/app/node_modules"
+                environment:
+                        - MONGO_ADDR=mongodb://u:p@mongo:27017
+        frontend:
+                build:
+                        context: "../../front"
+                        dockerfile: Dockerfile.dev
+                ports:
+                        - "2000:2000"
+                volumes:
+                        - "../../front:/app"
+                        - "/app/node_modules"
+                stdin_open: true
+                environment:
+                        - REACT_APP_BE_ADDR=${BE_ADDR}
+        mongo:
+                build: "../mongo"
+                ports:
+                        - "27099:27017"
+
+
