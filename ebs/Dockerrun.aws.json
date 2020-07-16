@@ -1,0 +1,56 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "volumes": [
+    {
+      "name": "mongo-storage",
+      "host": {
+        "sourcePath": "/home/ec2-user/mongo"
+      }
+    }  
+  ],
+  "containerDefinitions": [
+    {
+      "name": "frontend",
+      "image": "jbaramidze/drawgame-frontend-prod",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ]
+    },
+    {
+      "name": "backend",
+      "image": "jbaramidze/drawgame-backend",
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 3000,
+          "containerPort": 3000
+        }
+      ],
+      "links": [
+        "mongo"
+      ]
+    },
+    {
+      "name": "mongo",
+      "image": "jbaramidze/drawgame-mongo",
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 27017,
+          "containerPort": 27017
+        }
+      ],
+      "mountPoints": [
+        {
+          "sourceVolume": "mongo-storage",
+          "containerPath": "/data/db"
+        }
+      ]
+    }
+  ]
+}
